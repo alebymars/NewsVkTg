@@ -1,0 +1,15 @@
+{
+	"vk": {
+		"login": "******",
+		"password": "******",
+		"id_list": [
+          {"name": "ВКонтакте API", "id": -1},
+          {"name": "/dev/null", "id": -72495085}
+        ]
+	},
+    "telegram": {
+      "key": "******",
+      "chat_id": -1,
+      "admin_id": 1
+    }
+}
