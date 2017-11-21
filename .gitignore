@@ -1,6 +1,7 @@
 config.json
 timestamp
 vk_config.v2.json
+*.log
 
 __pycache__
 .idea

@@ -8,8 +8,11 @@
         ]
 	},
     "telegram": {
-      "key": "******",
-      "chat_id": -1,
-      "admin_id": 1
+        "key": "******",
+        "chat_id": -1,
+        "admin_id": 1
+    },
+    "logger": {
+        "debug": false
     }
 }

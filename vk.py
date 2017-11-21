@@ -9,11 +9,7 @@ def _vk_auth(config, callback_two_factor_auth):
         auth_handler=callback_two_factor_auth
     )
 
-    try:
-        vk_session.auth()
-    except vk_api.AuthError as error_msg:
-        print(error_msg)
-        return
+    vk_session.auth()
 
     return vk_session.get_api()
 

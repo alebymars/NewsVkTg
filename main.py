@@ -5,6 +5,8 @@ import json
 import vk
 import telegram
 
+import log
+
 
 def get_config():
     file_path = os.path.join('.', "config.json")
@@ -15,6 +17,9 @@ def get_config():
 
 CONFIG = get_config()
 TIMESTAMP = int(time.time())
+
+# Инициализация логов
+lg = log.create_log(debug=CONFIG["logger"]["debug"], filename=__file__[:-3])
 
 
 def callback_two_factor_auth():
@@ -51,7 +56,6 @@ def send_messages(data, config):
 
 def main():
     data_vk = vk.get_news(CONFIG["vk"], callback_two_factor_auth)
-    print(data_vk)
     send_messages(data_vk, CONFIG["telegram"])
 
     file_path = os.path.join('.', "timestamp")

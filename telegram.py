@@ -9,9 +9,7 @@ def send_text_message(token, text, chat_id):
         'text': text,
         'parse_mode': 'HTML'
     }
-    print(text)
     request = requests.post(URL+token+'/sendMessage', data=message_data)
-    print(request.content)
     return request.content
 
 
