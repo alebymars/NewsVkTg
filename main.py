@@ -31,13 +31,19 @@ def send_messages(data, config):
         if "attachments" in post:
             for att in post["attachments"]:
                 if "photo" in att:
-                    text_message += '<a href="{}">🍀 \n</a>'.format(att["photo"]["photo_130"])
+                    if 'photo_'+att['photo']['width'] in att["photo"]:
+                        text_message += '<a href="{}">🍀 \n</a>'.format(att["photo"]['photo_'+att['photo']['width']])
+                    else:
+                        text_message += '<a href="{}">🍀 \n</a>'.format(att["photo"]["photo_130"])
                     break
                 if "audio" in att:
                     text_message += '<i>Музыка по ссылке в вк =) </i>\n'
                     break
                 if "video" in att:
-                    text_message += '<a href="{}">Видео по ссылке в вк =) </a>\n'.format(att["video"]["photo_130"])
+                    if 'photo_'+att["video"]['width'] in att["video"]:
+                        text_message += '<a href="{}">Видео по ссылке в вк =) </a>\n'.format(att["video"]['photo_'+att["video"]['width']])
+                    else:
+                        text_message += '<a href="{}">Видео по ссылке в вк =) </a>\n'.format(att["video"]["photo_130"])
                     break
         text_message += "<b>{}</b>".format(vk.get_user(CONFIG["vk"], callback_two_factor_auth, post["from_id"]))
         if post["text"] != '':
