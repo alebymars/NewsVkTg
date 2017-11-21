@@ -22,7 +22,7 @@ def get_user(config, callback_two_factor_auth, id_user):
     if id_user > 0:
         vk = _vk_auth(config, callback_two_factor_auth)
         res = vk.users.get(user_ids=id_user)
-        return "{} {}".format(res[0]["first_name"], res[0]["last_name"])
+        return f"{res[0]['first_name']} {res[0]['last_name']}"
     else:
         for gr in config["id_list"]:
             if gr["id"] == id_user:

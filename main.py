@@ -31,30 +31,27 @@ def send_messages(data, config):
         if "attachments" in post:
             for att in post["attachments"]:
                 if "photo" in att:
-                    if 'photo_'+att['photo']['width'] in att["photo"]:
-                        text_message += '<a href="{}">🍀 \n</a>'.format(att["photo"]['photo_'+att['photo']['width']])
+                    if 'photo_'+str(att['photo']['width']) in att["photo"]:
+                        text_message += f'<a href="{att["photo"]["photo_"+str(att["photo"]["width"])]}">🍀 \n</a>'
                     else:
-                        text_message += '<a href="{}">🍀 \n</a>'.format(att["photo"]["photo_130"])
+                        text_message += f'<a href="{att["photo"]["photo_130"]}">🍀 \n</a>'
                     break
                 if "audio" in att:
                     text_message += '<i>Музыка по ссылке в вк =) </i>\n'
                     break
                 if "video" in att:
-                    if 'photo_'+att["video"]['width'] in att["video"]:
-                        text_message += '<a href="{}">Видео по ссылке в вк =) </a>\n'.format(att["video"]['photo_'+att["video"]['width']])
-                    else:
-                        text_message += '<a href="{}">Видео по ссылке в вк =) </a>\n'.format(att["video"]["photo_130"])
+                    text_message += f'<a href="{att["video"]["photo_130"]}">Видео по ссылке в вк =) </a>\n'
                     break
-        text_message += "<b>{}</b>".format(vk.get_user(CONFIG["vk"], callback_two_factor_auth, post["from_id"]))
+        text_message += f"<b>{vk.get_user(CONFIG['vk'], callback_two_factor_auth, post['from_id'])}</b>"
         if post["text"] != '':
-            text_message += "\n\n{}\n ".format(post["text"])
-        text_message += "\n<a href='https://vk.com/feed?w=wall{}_{}'>ссылка на вк</a> \n ".format(post["owner_id"],
-                                                                                                  post["id"])
+            text_message += f"\n\n{post['text']}\n "
+        text_message += f"\n<a href='https://vk.com/feed?w=wall{post['owner_id']}_{post['id']}'>ссылка на вк</a> \n "
         telegram.send_text_message(config["key"], text_message, config["chat_id"])
 
 
 def main():
     data_vk = vk.get_news(CONFIG["vk"], callback_two_factor_auth)
+    print(data_vk)
     send_messages(data_vk, CONFIG["telegram"])
 
     file_path = os.path.join('.', "timestamp")
