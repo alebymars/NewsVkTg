@@ -18,9 +18,10 @@ TIMESTAMP = int(time.time())
 
 
 def callback_two_factor_auth():
-    key = input("Enter authentication code: ")
+    offset = telegram.get_last_update_id(CONFIG["telegram"]["key"])
+    telegram.send_text_message(CONFIG["telegram"]["key"], "Enter authentication code: ", CONFIG["telegram"]["admin_id"])
+    key = telegram.get_text_message(CONFIG["telegram"]["key"], CONFIG["telegram"]["admin_id"], offset)
     remember_device = True
-
     return key, remember_device
 
 
