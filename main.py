@@ -31,6 +31,14 @@ def callback_two_factor_auth():
 
 
 def send_messages(data, config):
+    def find_max_size_photo(data):
+        size = 130
+        for name in data.keys():
+            if name[:6] == "photo_":
+                if size < int(name[6:]):
+                    size = int(name[6:])
+        return size
+
     for post in data[::-1]:
         text_message = ''
         if "attachments" in post:
@@ -39,13 +47,15 @@ def send_messages(data, config):
                     if 'photo_'+str(att['photo']['width']) in att["photo"]:
                         text_message += f'<a href="{att["photo"]["photo_"+str(att["photo"]["width"])]}">🍀 \n</a>'
                     else:
-                        text_message += f'<a href="{att["photo"]["photo_130"]}">🍀 \n</a>'
+                        text_message += \
+                            f'<a href="{att["photo"]["photo_"+str(find_max_size_photo(att["photo"]))]}">🍀 \n</a>'
                     break
                 if "audio" in att:
                     text_message += '<i>Музыка по ссылке в вк =) </i>\n'
                     break
                 if "video" in att:
-                    text_message += f'<a href="{att["video"]["photo_130"]}">Видео по ссылке в вк =) </a>\n'
+                    text_message += f'<a href="{att["video"]["photo_"+str(find_max_size_photo(att["video"]))]}">' \
+                                    f'Видео по ссылке в вк =) </a>\n'
                     break
         text_message += f"<b>{vk.get_user(CONFIG['vk'], callback_two_factor_auth, post['from_id'])}</b>"
         if post["text"] != '':
